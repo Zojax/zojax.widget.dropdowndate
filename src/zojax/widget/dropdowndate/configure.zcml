@@ -1,0 +1,52 @@
+<configure
+   xmlns="http://namespaces.zope.org/zope"
+   xmlns:z3c="http://namespaces.zope.org/z3c"
+   xmlns:zojax="http://namespaces.zope.org/zojax"
+   i18n_domain="zojax.widget.dropdowndate">
+
+  <!-- widgets -->
+  <adapter factory=".date.MonthFieldWidget" />
+  <adapter factory=".date.MonthDataConverter" />
+  <adapter factory=".date.DateFieldWidget" />
+  <adapter factory=".date.DateDataConverter" />
+  <adapter factory=".date.DatetimeFieldWidget" />
+  <adapter factory=".date.DatetimeDataConverter" />
+
+  <!-- widget templates -->
+  <z3c:widgetTemplate
+     mode="display"
+     widget=".interfaces.IMonthDropdownWidget"
+     template="widget_display.pt"
+     layer="z3c.form.interfaces.IFormLayer" />
+
+  <z3c:widgetTemplate
+     mode="display"
+     widget=".interfaces.IDateDropdownWidget"
+     template="widget_display.pt"
+     layer="z3c.form.interfaces.IFormLayer" />
+
+  <z3c:widgetTemplate
+     mode="display"
+     widget=".interfaces.IDatetimeDropdownWidget"
+     template="widget_display.pt"
+     layer="z3c.form.interfaces.IFormLayer" />
+
+  <z3c:widgetTemplate
+     mode="input"
+     widget=".interfaces.IMonthDropdownWidget"
+     template="widget_input.pt"
+     layer="z3c.form.interfaces.IFormLayer" />
+
+  <z3c:widgetTemplate
+     mode="input"
+     widget=".interfaces.IDateDropdownWidget"
+     template="widget_input.pt"
+     layer="z3c.form.interfaces.IFormLayer" />
+
+  <z3c:widgetTemplate
+     mode="input"
+     widget=".interfaces.IDatetimeDropdownWidget"
+     template="widget_input.pt"
+     layer="z3c.form.interfaces.IFormLayer" />
+
+</configure>

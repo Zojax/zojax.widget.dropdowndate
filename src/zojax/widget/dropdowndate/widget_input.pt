@@ -1,0 +1,46 @@
+<span id="" class=""
+      tal:attributes="id view/id;
+                      class view/klass;
+                      title view/title;
+                      lang view/lang;
+                      onclick view/onclick;
+                      ondblclick view/ondblclick;
+                      onmousedown view/onmousedown;
+                      onmouseup view/onmouseup;
+                      onmouseover view/onmouseover;
+                      onmousemove view/onmousemove;
+                      onmouseout view/onmouseout;
+                      onkeypress view/onkeypress;
+                      onkeydown view/onkeydown;
+                      onkeyup view/onkeyup">
+  <tal:block repeat="select view/selects">
+      <select id="" name="" class="" size="1"
+            tal:condition="not: select/hidden"
+            tal:attributes="id select/id;
+                            name string:${select/name}:list;
+                            class select/klass;
+                            title select/title;
+                            lang view/lang"
+                            >
+        <tal:block repeat="item select/items">
+          <option id="" value="" selected="selected"
+                 tal:condition="item/selected"
+                 tal:attributes="id item/id;
+                                 value item/value"
+                 tal:content="item/contents">label</option
+          ><option id="" value=""
+                 tal:condition="not:item/selected"
+                 tal:attributes="id item/id;
+                                 value item/value"
+                 tal:content="item/contents">label</option
+        ></tal:block>
+      </select>
+      <input type="hidden" tal:condition="select/hidden"
+            tal:attributes="id select/id;
+                            name string:${select/name}:list;
+                            class select/klass;
+                            title select/title;
+                            lang view/lang;
+                            value select/value" />
+  </tal:block>
+</span>

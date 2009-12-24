@@ -1,0 +1,323 @@
+==============================
+Date and Month Dropdown widget
+==============================
+
+    >>> from pytz import utc
+    >>> from datetime import date, datetime
+    >>> from zope import component, interface, event
+    >>> from zope.testbrowser.testing import Browser
+    >>> from zope.lifecycleevent import ObjectCreatedEvent
+    >>> from zope.app.testing.functional import getRootFolder
+    >>> from zope.app.component.hooks import setSite
+    >>> from zope.app.intid import IntIds
+    >>> from zope.app.intid.interfaces import IIntIds
+    >>> from zojax.skintool.interfaces import ISkinable
+    >>> from zojax.widget.dropdowndate.tests.content import Page1, Page2, Page3
+    >>> from zojax.widget.dropdowndate.tests import cleanupHTML
+
+    >>> d = date(2009, 1, 1)
+    >>> dt = datetime(2009, 1, 1, 1, 1, tzinfo=utc)
+
+    >>> root = getRootFolder()
+    >>> interface.alsoProvides(root, ISkinable)
+    >>> setSite(root)
+
+    >>> root['ids'] = IntIds()
+    >>> root.getSiteManager().registerUtility(root['ids'], IIntIds)
+
+    >>> page1 = Page1()
+    >>> page1.title = 'Page 1'
+    >>> page1.date = d
+    >>> event.notify(ObjectCreatedEvent(page1))
+    >>> root['page1'] = page1
+
+    >>> page2 = Page2()
+    >>> page2.title = 'Page 2'
+    >>> page2.date = dt
+    >>> event.notify(ObjectCreatedEvent(page2))
+    >>> root['page2'] = page2
+
+    >>> page3 = Page3()
+    >>> page3.title = 'Page 3'
+    >>> page3.date = dt
+    >>> event.notify(ObjectCreatedEvent(page3))
+    >>> root['page3'] = page3
+
+
+
+Month widget
+-----------
+
+    >>> user = Browser()
+    >>> user.addHeader("Authorization", "Basic user:userpw")
+    >>> user.handleErrors = False
+
+    >>> user.open('http://localhosr/page1/context.html')
+    >>> print user.contents
+    <html>
+    ...
+    <div class="z-form-field">
+      <label for="form-widgets-date" title="">Month</label>
+      <span class="z-form-fieldRequired">&nbsp;</span>
+      <div class="z-form-help"></div>
+      <div><span id="form-widgets-date"
+          class="widget-dropdown-month required monthdropdowndate-field">
+          <input type="hidden" name="form.widgets.date.day:list"
+                 title="Day" value="1"
+                 id="form-widgets-date-day"
+                 class="widget-dropdown-month required monthdropdowndate-field-day" />
+          <select id="form-widgets-date-month"
+                  name="form.widgets.date.month:list"
+                  class="widget-dropdown-month required monthdropdowndate-field-month"
+                  size="1" title="Month">
+              <option id="form-widgets-date-month-0" value="01"
+                      selected="selected">1</option>
+              ...
+          </select>
+          <select id="form-widgets-date-year"
+                  name="form.widgets.date.year:list"
+                  class="widget-dropdown-month required monthdropdowndate-field-year"
+                  size="1" title="Year">
+              <option id="form-widgets-date-year-0" value="1900">1900</option>
+              ...
+          </select>
+    </span>
+    </div>
+    </div>
+    </div>
+    ...
+    </html>
+
+set value
+
+    >>> user.getControl(name='form.widgets.date.month:list').displayValue = ['10']
+    >>> user.getControl(name='form.widgets.date.year:list').displayValue = ['1917']
+    >>> user.getControl(name="content.edit.buttons.save").click()
+    >>> print user.contents
+    <html>
+    ...
+    ...Data successfully updated...
+    ...
+    <div class="z-form-field">
+      <label for="form-widgets-date" title="">Month</label>
+      <span class="z-form-fieldRequired">&nbsp;</span>
+      <div class="z-form-help"></div>
+      <div><span id="form-widgets-date"
+             class="widget-dropdown-month required monthdropdowndate-field">
+          <input type="hidden" name="form.widgets.date.day:list"
+                 title="Day" value="1"
+                 id="form-widgets-date-day"
+                 class="widget-dropdown-month required monthdropdowndate-field-day" />
+          <select id="form-widgets-date-month"
+                  name="form.widgets.date.month:list"
+                  class="widget-dropdown-month required monthdropdowndate-field-month"
+                  size="1" title="Month">
+              ...
+              <option id="form-widgets-date-month-9" value="10"
+                      selected="selected">10</option>
+              ...
+          </select>
+          <select id="form-widgets-date-year"
+                  name="form.widgets.date.year:list"
+                  class="widget-dropdown-month required monthdropdowndate-field-year"
+                  size="1" title="Year">
+              ...
+              <option id="form-widgets-date-year-17"
+                      value="1917" selected="selected">1917</option>
+              ...
+          </select>
+       </span>
+    </div>
+    ...
+    </html>
+
+    >>> page1.date
+    datetime.date(1917, 10, 1)
+
+
+Date widget
+---------------
+
+    >>> user.open('http://localhosr/page2/context.html')
+    >>> print user.contents
+    <html>
+    ...
+    <div class="z-form-field">
+      <label for="form-widgets-date" title="">Date</label>
+      <span class="z-form-fieldRequired">&nbsp;</span>
+      <div class="z-form-help"></div>
+      <div><span id="form-widgets-date"
+          class="widget-dropdown-date required dropdowndate-field">
+          <select id="form-widgets-date-day"
+                  name="form.widgets.date.day:list"
+                  class="widget-dropdown-date required dropdowndate-field-day"
+                  size="1" title="Day">
+              <option id="form-widgets-date-day-0" value="01"
+                      selected="selected">01</option>
+              ...
+          </select>
+          <select id="form-widgets-date-month"
+                  name="form.widgets.date.month:list"
+                  class="widget-dropdown-date required dropdowndate-field-month"
+                  size="1" title="Month">
+              <option id="form-widgets-date-month-0" value="01"
+                      selected="selected">1</option>
+              ...
+          </select>
+          <select id="form-widgets-date-year"
+                  name="form.widgets.date.year:list"
+                  class="widget-dropdown-date required dropdowndate-field-year"
+                  size="1" title="Year">
+              ...
+              <option id="form-widgets-date-year-109"
+                      value="2009" selected="selected">2009</option>
+              ...
+          </select>
+    </span>
+    </div>
+    </div>
+    ...
+    </html>
+
+    >>> user.getControl(name='form.widgets.date.day:list').displayValue = ['07']
+    >>> user.getControl(name='form.widgets.date.month:list').displayValue = ['10']
+    >>> user.getControl(name='form.widgets.date.year:list').displayValue = ['1917']
+    >>> user.getControl(name="content.edit.buttons.save").click()
+
+    >>> print user.contents
+    <html>
+    ...
+    ...Data successfully updated...
+    ...
+    <div class="z-form-field">
+      <label for="form-widgets-date" title="">Date</label>
+      <span class="z-form-fieldRequired">&nbsp;</span>
+      <div class="z-form-help"></div>
+      <div><span id="form-widgets-date"
+          class="widget-dropdown-date required dropdowndate-field">
+          <select id="form-widgets-date-day"
+                  name="form.widgets.date.day:list"
+                  class="widget-dropdown-date required dropdowndate-field-day"
+                  size="1" title="Day">
+              ...
+              <option id="form-widgets-date-day-6" value="07"
+                      selected="selected">07</option>
+              ...
+          </select>
+          <select id="form-widgets-date-month"
+                  name="form.widgets.date.month:list"
+                  class="widget-dropdown-date required dropdowndate-field-month"
+                  size="1" title="Month">
+              ...
+              <option id="form-widgets-date-month-9" value="10"
+                      selected="selected">10</option>
+              ...
+          </select>
+          <select id="form-widgets-date-year"
+                  name="form.widgets.date.year:list"
+                  class="widget-dropdown-date required dropdowndate-field-year"
+                  size="1" title="Year">
+              ...
+              <option id="form-widgets-date-year-17"
+                      value="1917" selected="selected">1917</option>
+              ...
+          </select>
+       </span>
+    </div>
+    ...
+    </html>
+
+    >>> page2.date
+    datetime.date(1917, 10, 7)
+
+Datetime widget
+---------------
+
+    >>> user.open('http://localhosr/page3/context.html')
+    >>> print user.contents
+    <html>
+    ...
+    <div class="z-form-field">
+      <label for="form-widgets-date" title="">Date</label>
+      <span class="z-form-fieldRequired">&nbsp;</span>
+    <BLANKLINE>
+      <div class="z-form-help"></div>
+      <div><span id="form-widgets-date"
+          class="widget-dropdown-datetime required dropdowndatetime-field">
+    <BLANKLINE>
+          <select id="form-widgets-date-day"
+                  name="form.widgets.date.day:list"
+                  class="widget-dropdown-datetime required dropdowndatetime-field-day"
+                  size="1" title="Day">
+              <option id="form-widgets-date-day-0" value="01"
+                      selected="selected">01</option>
+              ...
+          </select>
+          <select id="form-widgets-date-month"
+                  name="form.widgets.date.month:list"
+                  class="widget-dropdown-datetime required dropdowndatetime-field-month"
+                  size="1" title="Month">
+              <option id="form-widgets-date-month-0" value="01"
+                      selected="selected">1</option>
+              ...
+          </select>
+          <select id="form-widgets-date-year"
+                  name="form.widgets.date.year:list"
+                  class="widget-dropdown-datetime required dropdowndatetime-field-year"
+                  size="1" title="Year">
+              ...
+              <option id="form-widgets-date-year-109"
+                      value="2009" selected="selected">2009</option>
+              ...
+          </select>
+          <select id="form-widgets-date-hour"
+                  name="form.widgets.date.hour:list"
+                  class="widget-dropdown-datetime required dropdowndatetime-field-hour"
+                  size="1" title="Hour">
+              ...
+              <option id="form-widgets-date-hour-1" value="01"
+                      selected="selected">01</option>
+              ...
+          </select>
+          <select id="form-widgets-date-minute"
+                  name="form.widgets.date.minute:list"
+                  class="widget-dropdown-datetime required dropdowndatetime-field-minute"
+                  size="1" title="Minute">
+              ...
+              <option id="form-widgets-date-minute-1" value="01"
+                      selected="selected">01</option>
+              ...
+          </select>
+          <select id="form-widgets-date-second"
+                  name="form.widgets.date.second:list"
+                  class="widget-dropdown-datetime required dropdowndatetime-field-second"
+                  size="1" title="Second">
+              <option id="form-widgets-date-second-0" value="00"
+                      selected="selected">00</option>
+              ...
+          </select>
+    </span>
+    </div>
+    </div>
+    ...
+    </html>
+
+    >>> user.getControl(name='form.widgets.date.hour:list').displayValue = ['16']
+    >>> user.getControl(name='form.widgets.date.minute:list').displayValue = ['43']
+    >>> user.getControl(name='form.widgets.date.second:list').displayValue = ['54']
+    >>> user.getControl(name='form.widgets.date.day:list').displayValue = ['07']
+    >>> user.getControl(name='form.widgets.date.month:list').displayValue = ['10']
+    >>> user.getControl(name='form.widgets.date.year:list').displayValue = ['1917']
+    >>> user.getControl(name="content.edit.buttons.save").click()
+
+    >>> print user.contents
+    <html>
+    ...
+    ...Data successfully updated...
+    ...
+    </html>
+
+    >>> page3.date
+    datetime.datetime(1917, 10, 7, 16, 43, 54, tzinfo=<UTC>)
+
+    >>> setSite(None)
