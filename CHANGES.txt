@@ -1,0 +1,20 @@
+=======
+CHANGES
+=======
+
+0.2.0 (2009-08-12)
+------------------
+
+- Copyright changed to 'Zope Foundation and Contributors'
+
+
+0.1.1 (2009-05-20)
+------------------
+
+- Unicode bug fixed
+
+
+0.1.0 (2009-04-09)
+------------------
+
+- Initial release
