@@ -114,8 +114,8 @@ class BaseWidget(TextWidget):
             if value is not PLACEHOLDER:
                 try:
                     dt[i[1]] = int(value[0])
-                except (TypeError, IndexError, ValueError), e:
-                    pass
+                except (TypeError, IndexError), e:
+                    dt[i[1]] = 1
         if not dt:
             dt = self.request.form.get(self.name, PLACEHOLDER)
             if dt is not PLACEHOLDER:
