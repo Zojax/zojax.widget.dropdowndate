@@ -124,7 +124,7 @@ class BaseWidget(TextWidget):
                 except zope.i18n.format.DateTimeParseError, err:
                     res = parseDatetimetz(dt)
                 return self.type_(res.year, res.month, res.day)
-        else:
+        elif len(dt)>2:
             return self.formatter.parse(self.formatter.format(self.type_(**dt)))
         return default
 
