@@ -66,6 +66,7 @@ setup(name='zojax.widget.dropdowndate',
                                   'zojax.content.type',
                                   'zojax.content.forms',
                                   'zojax.autoinclude',
+                                  'zojax.formatter [test]'
                                   ]),
       include_package_data = True,
       zip_safe = False

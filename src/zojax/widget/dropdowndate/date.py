@@ -19,7 +19,7 @@ import time
 from datetime import date, datetime
 
 from zope import interface, component, schema
-from zope.datetime import parseDatetimetz
+from zope.datetime import parseDatetimetz, SyntaxError
 import zope.i18n
 from zope.cachedescriptors.property import Lazy
 
@@ -75,7 +75,10 @@ class BaseWidget(TextWidget):
     def update(self):
         self.locale = self.request.locale
         self.formatter = self.locale.dates.getFormatter(self.type, self.length)
-        super(BaseWidget, self).update()
+        try:
+            super(BaseWidget, self).update()
+        except schema.ValidationError:
+            pass
         data = self.value
         prefix = self.name + '.'
         idprefix = self.id + '-'
@@ -122,7 +125,10 @@ class BaseWidget(TextWidget):
                 try:
                     res = self.formatter.parse(dt)
                 except zope.i18n.format.DateTimeParseError, err:
-                    res = parseDatetimetz(dt)
+                    try:
+                        res = parseDatetimetz(dt)
+                    except SyntaxError:
+                        raise FormatterValidationError(_(u'Wrong datetime format'), dt)
                 return self.type_(res.year, res.month, res.day)
         elif len(dt)>2:
             return self.formatter.parse(self.formatter.format(self.type_(**dt)))
