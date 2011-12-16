@@ -1,0 +1,53 @@
+##############################################################################
+#
+# Copyright (c) 2003-2004 Zope Corporation and Contributors.
+# All Rights Reserved.
+#
+# This software is subject to the provisions of the Zope Public License,
+# Version 2.1 (ZPL).  A copy of the ZPL should accompany this distribution.
+# THIS SOFTWARE IS PROVIDED "AS IS" AND ANY AND ALL EXPRESS OR IMPLIED
+# WARRANTIES ARE DISCLAIMED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+# WARRANTIES OF TITLE, MERCHANTABILITY, AGAINST INFRINGEMENT, AND FITNESS
+# FOR A PARTICULAR PURPOSE.
+#
+##############################################################################
+msgid ""
+msgstr ""
+"Project-Id-Version: Development/Unknown\n"
+"POT-Creation-Date: Thu Dec  8 23:34:50 2011\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Zope 3 Developers <zope3-dev@zope.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: zope/app/locales/extract.py\n"
+
+#: src/zojax/widget/dropdowndate/date.py:131
+msgid "Wrong datetime format"
+msgstr ""
+
+#: src/zojax/widget/dropdowndate/date.py:67
+msgid "Day"
+msgstr ""
+
+#: src/zojax/widget/dropdowndate/date.py:68
+msgid "Month"
+msgstr ""
+
+#: src/zojax/widget/dropdowndate/date.py:69
+msgid "Year"
+msgstr ""
+
+#: src/zojax/widget/dropdowndate/date.py:70
+msgid "Hour"
+msgstr ""
+
+#: src/zojax/widget/dropdowndate/date.py:71
+msgid "Minute"
+msgstr ""
+
+#: src/zojax/widget/dropdowndate/date.py:72
+msgid "Second"
+msgstr ""
+
